@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>270</x>
+      <y>0</y>
+      <w>370</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Satellite
+--
+- orbit: Orbit
+--
++ groundTrack(duration: double): List&lt;Position&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>210</x>
+      <y>160</y>
+      <w>480</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Orbit
+--
+- eccentricty: double
+- semiMajorAxis: double
+- inclination: double
+- longitudeOfAscendingNode: double
+- argumentOfPeriapsis: double
+--
++ Orbit(e, a, i, longitudeOfAscendingNode, argumentOfPeriapsis) 
++ calculateTrueAnamoly(time: LocalDateTime)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>990</x>
+      <y>0</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>GroundStation
+--
+- position: Position
+- azimuth: double
+- elevation: double
+- range: double
+--
++ calcECI(orbit: Orbit)
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>980</x>
+      <y>290</y>
+      <w>450</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>OrbitTransfers
+--
+
+--
++ hohmannTransfer(orbit1: Orbit, orbit2 Orbit): Orbit
++ homannTransferDeltaV(orbit1: Orbit, orbit1: Orbit): double
++ hohmannTransferTime(orbit1: Orbit, orbit2: Orbit): double
+
++ inclinationChange(orbit1: Orbit, orbit2 Orbit): Orbit
++ inclinationChangeDeltaV(orbit1: Orbit, orbit1: Orbit): double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1260</x>
+      <y>30</y>
+      <w>210</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>Position
+--
+- lattide: double
+- longitude: double
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>430</x>
+      <y>80</y>
+      <w>30</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>690</x>
+      <y>490</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Main
+--
+Responsibilities
+ Instaniate Orbits, 
+ perform orbit transfers
+ Plot ground tracks
+ Ground station bearings
+ </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>50</x>
+      <y>930</y>
+      <w>210</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>MapPanel
+--
+- imageFileName: String
+--
++ plotGroundTrack(positions: List&lt;Position&gt;)
++ plotGroundStation(position: Position)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>310</x>
+      <y>930</y>
+      <w>210</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>OrbitalPanel
+--
+
+--
++ plotOrbit(orbit: Orbit)
++ clearPlot()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>630</x>
+      <y>940</y>
+      <w>320</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>ButtonPanel
+--
+- createSatelliteButton: JButton
+- createGroundStationButton: JButton
+- performOrbitTransferButton: JButton
+--
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>130</x>
+      <y>760</y>
+      <w>210</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>SatellitePanel
+--
++ createSatellite(): Satellite</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>630</y>
+      <w>270</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>GUI
+--
+- satellites: List&lt;Satellite&gt; static
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>820</x>
+      <y>840</y>
+      <w>300</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>GroundStationPanel
+--
++ createGroundStation(): GroundStation</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1160</x>
+      <y>820</y>
+      <w>210</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>OrbitTransfersPanel
+--
+
+--
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1190</x>
+      <y>80</y>
+      <w>90</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+</diagram>
