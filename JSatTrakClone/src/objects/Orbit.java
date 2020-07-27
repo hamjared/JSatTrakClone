@@ -17,6 +17,15 @@ public class Orbit {
 		this.argumentOfPeriapsis = argumentOfPeriapsis;
 	}
 	
+	
+	public double calcApogee() {
+		return semiMajorAxis * (1 + this.eccentricity);
+	}
+	
+	public double calcPerigee() {
+		return semiMajorAxis * (1-this.eccentricity);
+	}
+	
 	public double calculateTrueAnamoly( LocalDateTime time) {
 		return 0;
 	}

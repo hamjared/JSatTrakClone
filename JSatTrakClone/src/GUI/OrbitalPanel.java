@@ -46,38 +46,56 @@ public class OrbitalPanel extends JPanel {
 		}
 		
 		if(orbit == null) {
-			orbit = new Orbit(0.5, 40e6, 5, 5, 5);
+			orbit = new Orbit(0.74,26.6e6, 5, 5, 5);
 		}
 		
 		
 		System.out.println(orbit.getSemiMajorAxis()*2 * orbit.getEccentricity() * METERS_TO_PIXELS);
 		System.out.println(orbit.getSemiMajorAxis()*2 * METERS_TO_PIXELS);
 		
-		Ellipse2D ellipse = new Ellipse2D.Double(480, 400, 
-				orbit.getSemiMajorAxis()*2 * orbit.getEccentricity() * METERS_TO_PIXELS, 
-				orbit.getSemiMajorAxis()*2 * METERS_TO_PIXELS
-				);
-
-		g2.translate((int)(-orbit.getSemiMajorAxis()*2 * orbit.getEccentricity() * METERS_TO_PIXELS / 2), 
-				(int)(-orbit.getSemiMajorAxis()*2 * METERS_TO_PIXELS / 2));
+		this.drawScaledCenteredEllipse(this.getWidth()/2, this.getHeight()/2, 
+				orbit.getSemiMajorAxis(), orbit.getEccentricity(), g2);
+		
+		int fociScaled = (int) (this.calcEllipseFoci(orbit.getSemiMajorAxis(), orbit.getEccentricity()) * METERS_TO_PIXELS);
+		
+		this.drawScaledCenteredEllipse(this.getWidth()/2,this.getHeight()/2 + fociScaled , 
+				EARTH_RADIUS, 1 , g2);
+		
+		
+		System.out.println(orbit.calcApogee());
+		System.out.println(orbit.calcPerigee());
+		
 		
 
-		double focusYPosition = Math.sqrt(Math.pow(orbit.getSemiMajorAxis(), 2.0) - 
-				Math.pow(orbit.getSemiMajorAxis()*orbit.getEccentricity(), 2.0));
-		Ellipse2D earth = new Ellipse2D.Double(((int) (focusYPosition * METERS_TO_PIXELS)) + 400,
-				 600,
-				(int) (EARTH_RADIUS*METERS_TO_PIXELS),
-				(int) (EARTH_RADIUS*METERS_TO_PIXELS) );
-		
-		g2.translate((int)(-EARTH_RADIUS*METERS_TO_PIXELS)/2, 
-				(int)(-EARTH_RADIUS*METERS_TO_PIXELS)/2);
-		
-		System.out.println( ((int) (focusYPosition * METERS_TO_PIXELS)) + 400);
-		
-		g2.draw(ellipse);
-		g2.draw(earth);
 
 	
+	}
+	
+	private void drawCenteredEllipse(int x, int y, int width, int height, Graphics2D g) {
+		
+		int centeredX = x - width/2;
+		int centeredY = y - height/2;
+		
+		Ellipse2D ellipse = new Ellipse2D.Double(centeredX, centeredY, width, height);
+		
+		g.draw(ellipse);
+		
+	}
+	
+	private void drawScaledCenteredEllipse(int x, int y, double semiMajorAxis, double eccentricity, Graphics2D g) {
+		double height = semiMajorAxis * 2 * METERS_TO_PIXELS;
+		double width = eccentricity * semiMajorAxis * 2 * METERS_TO_PIXELS;
+		
+		drawCenteredEllipse(x, y, (int)width, (int)height, g);
+		
+	}
+	
+	private double calcEllipseFoci(double semiMajorAxis, double eccentricty) {
+		double a = semiMajorAxis;
+		double b = a * eccentricty;
+		double c = Math.sqrt(Math.pow(a, 2) - Math.pow(b, 2));
+		
+		return c;
 	}
 	
 
