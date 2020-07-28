@@ -1,5 +1,7 @@
 package objects;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Satellite {
@@ -12,8 +14,16 @@ public class Satellite {
 		this.name = name;
 	}
 	
-	public List<Position> groundTrack(double duration){
-		return null;
+	public List<Position> groundTrack(LocalDateTime start, LocalDateTime end){
+		List<Position> positions = new ArrayList<Position>();
+		int stepSize = 300; //seconds
+		LocalDateTime curTime = start;
+		while(curTime.compareTo(end) < 0) {
+			curTime = curTime.plusSeconds(stepSize);
+			Position pos = TransformationOrbitalElementsToLLA.orbitalElementsToLLA(orbit, curTime);
+			positions.add(pos);
+		}
+		return positions;
 	}
 	
 	public String toString() {

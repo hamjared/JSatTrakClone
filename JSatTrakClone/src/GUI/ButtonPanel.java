@@ -16,6 +16,7 @@ public class ButtonPanel extends JPanel {
 	private JButton satelliteButton;
 	private JButton groundStationButton;
 	private JButton orbitTransferButton;
+	private JButton refreshButton;
 
 	private JComboBox comboBox;
 
@@ -27,6 +28,8 @@ public class ButtonPanel extends JPanel {
 		satelliteButton = new JButton("Add Satellite");
 		groundStationButton = new JButton("Add Ground Station");
 		orbitTransferButton = new JButton("Orbit Transfer");
+		refreshButton = new JButton("Refresh");
+		
 		satelliteButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -56,6 +59,18 @@ public class ButtonPanel extends JPanel {
 			}
 
 		});
+		
+		refreshButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				refreshButtonPressed();
+				
+			}
+			
+		});
+		
+		
 
 
 		super.add(satelliteButton);
@@ -68,9 +83,12 @@ public class ButtonPanel extends JPanel {
 
 
 		super.add(comboBox);
+		super.add(refreshButton);
 	}
 
 	protected void refreshButtonPressed() {
+		super.revalidate();
+		this.getParent().repaint();
 		
 		
 	}
