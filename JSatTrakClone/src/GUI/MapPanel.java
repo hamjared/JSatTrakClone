@@ -13,9 +13,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JPanel;
-
 import objects.Position;
 import objects.Satellite;
 
@@ -24,19 +22,17 @@ public class MapPanel extends JPanel {
 	private static final String mapImageFile = "resource/Mercator_projection_Square.jpg";
 	private static final int mapWidth = 800;
 	private static final int mapHeight = 800;
+	private static final long serialVersionUID = 4482363922601778730L;
 
 	public MapPanel() {
 		super();
 		setBackground(Color.BLUE);
 		setPreferredSize(new Dimension(960, 800));
-		
-
 	}
 
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(getImage(), 0, 0, mapWidth, mapHeight, null);
-
 	}
 
 	public void paint(Graphics g) {
@@ -51,9 +47,7 @@ public class MapPanel extends JPanel {
 		}
 		System.out.println("ISS Ground Track:");
 		System.out.println(sat.groundTrack(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
-		drawGroundTrack(sat.groundTrack(LocalDateTime.now(), LocalDateTime.now().plusDays(1)),g );
-		
-
+		drawGroundTrack(sat.groundTrack(LocalDateTime.now(), LocalDateTime.now().plusDays(1)), g);
 	}
 
 	private Image getImage() {
@@ -104,17 +98,14 @@ public class MapPanel extends JPanel {
 				String[] cardInfo = line.split(",");
 				if (cardInfo.length == 0) {
 					br.close();
-
 				}
-				
 				positions.add(new Position(Double.parseDouble(cardInfo[1]), Double.parseDouble(cardInfo[2])));
 			}
 			br.close();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return positions;
 	}
-
 }

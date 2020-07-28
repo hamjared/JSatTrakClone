@@ -1,15 +1,8 @@
 package GUI;
 
-
-
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
-
 import objects.Satellite;
 
 public class GUI {
@@ -21,7 +14,7 @@ public class GUI {
 		jframe.add(new ButtonPanel(), BorderLayout.NORTH);
 		jframe.add(new MapPanel(), BorderLayout.WEST);
 		jframe.add(new OrbitalPanel(), BorderLayout.EAST);
-		
 		jframe.setVisible(true);
+		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }

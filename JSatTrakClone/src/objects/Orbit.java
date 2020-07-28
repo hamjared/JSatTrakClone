@@ -16,11 +16,10 @@ public class Orbit {
 	public Orbit(double e, double a, double i, double longitudeOfAscendingNode, double argumentOfPeriapsis) {
 		this.eccentricity = e;
 		this.semiMajorAxis = a;
-		this.inclination = i ;
+		this.inclination = i;
 		this.longitudeOfAscendingNode = longitudeOfAscendingNode;
 		this.argumentOfPeriapsis = argumentOfPeriapsis;
 	}
-	
 	
 	public double calcApogee() {
 		return semiMajorAxis * (1 + this.eccentricity);
@@ -57,7 +56,6 @@ public class Orbit {
 		else {
 			return trueAnamoly;
 		}
-		
 	}
 
 	public double getEccentricity() {
@@ -99,7 +97,6 @@ public class Orbit {
 	public void setArgumentOfPeriapsis(double argumentOfPeriapsis) {
 		this.argumentOfPeriapsis = argumentOfPeriapsis;
 	}
-	
 	
 	public static void main(String[] args) {
 		Orbit orbit = new Orbit(0.37255, 15.3e6, 0,0,0);
