@@ -10,12 +10,14 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 
+import objects.Orbit;
 import objects.Satellite;
 
 public class GUI {
 	public static DefaultComboBoxModel<Satellite> satellites = new DefaultComboBoxModel<Satellite>();
 	
 	public GUI() {
+		satellites.addElement(new Satellite("ISS", new Orbit(0, 6.79e6, 66.5, 225.16, 96.2)));
 		JFrame jframe = new JFrame();
 		jframe.setSize(1920, 900);
 		jframe.add(new ButtonPanel(), BorderLayout.NORTH);

@@ -36,7 +36,7 @@ public class OrbitalPanel extends JPanel {
 	
 	public void paint(Graphics g) {
 		super.paint(g);
-		System.out.println("Paint!");
+
 		Graphics2D g2 = (Graphics2D) g;
 		
 		Satellite satellite = (Satellite) GUI.satellites.getSelectedItem();
@@ -46,12 +46,11 @@ public class OrbitalPanel extends JPanel {
 		}
 		
 		if(orbit == null) {
-			orbit = new Orbit(0.74,26.6e6, 5, 5, 5);
+			return;
 		}
 		
 		
-		System.out.println(orbit.getSemiMajorAxis()*2 * orbit.getEccentricity() * METERS_TO_PIXELS);
-		System.out.println(orbit.getSemiMajorAxis()*2 * METERS_TO_PIXELS);
+
 		
 		this.drawScaledCenteredEllipse(this.getWidth()/2, this.getHeight()/2, 
 				orbit.getSemiMajorAxis(), orbit.getEccentricity(), g2);
@@ -59,14 +58,9 @@ public class OrbitalPanel extends JPanel {
 		int fociScaled = (int) (this.calcEllipseFoci(orbit.getSemiMajorAxis(), orbit.getEccentricity()) * METERS_TO_PIXELS);
 		
 		this.drawScaledCenteredEllipse(this.getWidth()/2,this.getHeight()/2 + fociScaled , 
-				EARTH_RADIUS, 1 , g2);
+				EARTH_RADIUS, 0 , g2);
 		
-		
-		System.out.println(orbit.calcApogee());
-		System.out.println(orbit.calcPerigee());
-		
-		
-
+	
 
 	
 	}
@@ -83,19 +77,21 @@ public class OrbitalPanel extends JPanel {
 	}
 	
 	private void drawScaledCenteredEllipse(int x, int y, double semiMajorAxis, double eccentricity, Graphics2D g) {
+		double e = eccentricity;
 		double height = semiMajorAxis * 2 * METERS_TO_PIXELS;
-		double width = eccentricity * semiMajorAxis * 2 * METERS_TO_PIXELS;
+		System.out.println("Height: ");
+		System.out.println(height);
+		double width = 2.0* semiMajorAxis * Math.sqrt(1-e*e) * METERS_TO_PIXELS;
+		System.out.println("Width:");
+		System.out.println(width);
 		
 		drawCenteredEllipse(x, y, (int)width, (int)height, g);
 		
 	}
 	
 	private double calcEllipseFoci(double semiMajorAxis, double eccentricty) {
-		double a = semiMajorAxis;
-		double b = a * eccentricty;
-		double c = Math.sqrt(Math.pow(a, 2) - Math.pow(b, 2));
 		
-		return c;
+		return semiMajorAxis*eccentricty;
 	}
 	
 
