@@ -1,24 +1,19 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import objects.Orbit;
 import objects.Satellite;
-
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class SatellitePanel extends JFrame {
 
+	private static final long serialVersionUID = 4074816864911541470L;
 	private JPanel contentPane;
 	private JTextField textField_name;
 	private JTextField textField_inclination;
@@ -26,7 +21,6 @@ public class SatellitePanel extends JFrame {
 	private JTextField textField_logindtudeOfAscendingNode;
 	private JTextField textField_argumentOfPeriapsis;
 	private JTextField textField_eccentricity;
-
 
 	public SatellitePanel() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -113,12 +107,9 @@ public class SatellitePanel extends JFrame {
 		setVisible(true);
 	}
 
-
 	protected boolean verifyInputs() {
 		return true;
-		
 	}
-
 
 	protected void addSatellite() {
 		Orbit orbit = new Orbit(
@@ -134,8 +125,5 @@ public class SatellitePanel extends JFrame {
 				);
 		
 		dispose();
-
 	}
-	
-	
 }

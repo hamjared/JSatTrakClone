@@ -1,18 +1,19 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import objects.Satellite;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
 public class OrbitTransferPanel extends JFrame {
 
+	private static final long serialVersionUID = 4891662990030018097L;
 	private JPanel contentPane;
 	private JTextField textField_name;
 	private JTextField textField_inclination;
@@ -33,7 +34,7 @@ public class OrbitTransferPanel extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JComboBox comboBox = new JComboBox(GUI.satellites);
+		JComboBox<Satellite> comboBox = new JComboBox<objects.Satellite>(GUI.satellites);
 		comboBox.setBounds(262, 23, 125, 22);
 		contentPane.add(comboBox);
 		

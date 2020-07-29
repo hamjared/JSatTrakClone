@@ -4,22 +4,18 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.AbstractListModel;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 public class ButtonPanel extends JPanel {
 
+	private static final long serialVersionUID = 3541175169325575021L;
 	private JButton satelliteButton;
 	private JButton groundStationButton;
 	private JButton orbitTransferButton;
 	private JButton refreshButton;
-
-	private JComboBox comboBox;
-
+	private JComboBox<objects.Satellite> comboBox;
 
 	public ButtonPanel() {
 		super();
@@ -31,13 +27,12 @@ public class ButtonPanel extends JPanel {
 		refreshButton = new JButton("Refresh");
 		
 		satelliteButton.addActionListener(new ActionListener() {
-
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				satelliteButtonPressed();
-
 			}
-
+			
 		});
 
 		groundStationButton.addActionListener(new ActionListener() {
@@ -70,18 +65,10 @@ public class ButtonPanel extends JPanel {
 			
 		});
 		
-		
-
-
 		super.add(satelliteButton);
 		super.add(groundStationButton);
 		super.add(orbitTransferButton);
-		
-
-	
-		comboBox = new JComboBox(GUI.satellites);
-
-
+		comboBox = new JComboBox<objects.Satellite>(GUI.satellites);
 		super.add(comboBox);
 		super.add(refreshButton);
 	}
@@ -89,25 +76,18 @@ public class ButtonPanel extends JPanel {
 	protected void refreshButtonPressed() {
 		super.revalidate();
 		this.getParent().repaint();
-		
-		
 	}
 
 	protected void orbitTansferButtonPressed() {
-		OrbitTransferPanel orbitTransferPanel = new OrbitTransferPanel();
-
+		new OrbitTransferPanel();
 	}
 
 	protected void groundStationButtonPressed() {
-		GroundStationPane groundStationPane = new GroundStationPane();
-
+		new GroundStationPane();
 	}
 
 	public void satelliteButtonPressed() {
 		System.out.println("Satellite Button Pressed");
-		SatellitePanel satellitePanel = new SatellitePanel();
-		
-		
+		new SatellitePanel();
 	}
-
 }
