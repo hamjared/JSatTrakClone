@@ -57,6 +57,10 @@ public class Orbit {
 			return trueAnamoly;
 		}
 	}
+	
+	public double calcOrbitalPeriod() {
+		return Math.PI*2 * Math.sqrt(semiMajorAxis * semiMajorAxis * semiMajorAxis/AstroConstants.EARTH_GRAVITATIONAL_PARAMETER); // seconds
+	}
 
 	public double getEccentricity() {
 		return eccentricity;
@@ -102,5 +106,39 @@ public class Orbit {
 		Orbit orbit = new Orbit(0.37255, 15.3e6, 0,0,0);
 		
 		System.out.println(orbit.calculateTrueAnamoly(LocalDateTime.of(2020, Month.JANUARY, 1, 3, 0)));
+	}
+	
+	public boolean equals(Orbit orbit2) {
+		if(eccentricity != orbit2.getEccentricity()) {
+			return false;
+		}
+		if (semiMajorAxis != orbit2.getSemiMajorAxis()) {
+			return false;
+		}
+		if(inclination != orbit2.getInclination()) {
+			return false;
+		}
+		if(longitudeOfAscendingNode != orbit2.getLongitudeOfAscendingNode()) {
+			return false;
+		}
+		if(argumentOfPeriapsis != orbit2.getArgumentOfPeriapsis()) {
+			return false;
+		}
+		return true;
+	}
+
+	public double getLongitudeOfAscendingNodeRadians() {
+		
+		return Math.toRadians(longitudeOfAscendingNode);
+	}
+
+	public double getArgumentOfPeriapsisRadians() {
+		
+		return Math.toRadians(argumentOfPeriapsis);
+	}
+
+	public double getInclinationRadians() {
+		// TODO Auto-generated method stub
+		return Math.toRadians(inclination);
 	}
 }

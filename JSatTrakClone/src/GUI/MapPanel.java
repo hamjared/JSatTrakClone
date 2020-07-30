@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
+
+import objects.GroundStation;
 import objects.Position;
 import objects.Satellite;
 
@@ -36,18 +38,33 @@ public class MapPanel extends JPanel {
 	}
 
 	public void paint(Graphics g) {
-		Position denver = new Position(39.7392, -104.9903);
+		
 		g.drawImage(getImage(), 0, 0, mapWidth, mapHeight, null);
-		drawCenteredEllipse(denver.getMercatorLongitude(mapWidth, mapHeight),
-				denver.getMercatorLatitude(mapWidth, mapHeight), 20, 20, (Graphics2D) g);
+		plotGroundStations(g);
 		Satellite sat = (Satellite) GUI.satellites.getSelectedItem();
 		if(sat == null) {
 			System.out.println("Satellite  is null");
 			return;
 		}
 		System.out.println("ISS Ground Track:");
-		System.out.println(sat.groundTrack(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
-		drawGroundTrack(sat.groundTrack(LocalDateTime.now(), LocalDateTime.now().plusDays(1)), g);
+		List<Position> groundTrack = sat.groundTrack(LocalDateTime.now().minusMinutes(0), LocalDateTime.now().plusMinutes(24*60));
+//		groundTrack.forEach(pos -> System.out.println(pos));
+		drawGroundTrack(groundTrack, g);
+	}
+	
+	private void plotGroundStations(Graphics g) {
+		GroundStation gs = (GroundStation) GUI.groundStations.getSelectedItem();
+		
+		if(gs == null) {
+			return;
+		}
+		
+		Position gsPos = gs.getPosition();
+		
+		Graphics2D g2 = (Graphics2D) g;
+		
+		drawCenteredEllipse(gsPos.getMercatorLongitude(mapWidth, mapHeight),
+				gsPos.getMercatorLatitude(mapWidth, mapHeight), 10, 10, true, (Graphics2D) g);
 	}
 
 	private Image getImage() {
@@ -70,15 +87,25 @@ public class MapPanel extends JPanel {
 		}
 	}
 
-	private void drawCenteredEllipse(int x, int y, int width, int height, Graphics2D g) {
+	private void drawCenteredEllipse(int x, int y, int width, int height, boolean filled, Graphics2D g) {
 
 		int centeredX = x - width / 2;
 		int centeredY = y - height / 2;
 
 		Ellipse2D ellipse = new Ellipse2D.Double(centeredX, centeredY, width, height);
+		
+		if(filled) {
+			Color prevColor = g.getColor();
+			g.setPaint(Color.RED);
+			g.fill(ellipse);
+			g.setPaint(prevColor);
+		}
+		else {
+			g.draw(ellipse);
 
-		g.draw(ellipse);
+		}
 
+		
 	}
 
 	private List<Position> readGroundTrack() {
