@@ -126,4 +126,19 @@ public class Orbit {
 		}
 		return true;
 	}
+
+	public double getLongitudeOfAscendingNodeRadians() {
+		
+		return Math.toRadians(longitudeOfAscendingNode);
+	}
+
+	public double getArgumentOfPeriapsisRadians() {
+		
+		return Math.toRadians(argumentOfPeriapsis);
+	}
+
+	public double getInclinationRadians() {
+		// TODO Auto-generated method stub
+		return Math.toRadians(inclination);
+	}
 }
