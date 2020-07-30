@@ -29,9 +29,11 @@ public class TransformationOrbitalElementsToLLA {
 				Q
 				);
 		
+		
+		
 		double lat = calcLatitude(X, Y, Z);
 		double lon = calcLongitude(X,Y);
-		
+//		System.out.println("X: " + X + " Y: " + Y + "Lat: " + lat + "Long: " + lon);
 		return new Position(lat, lon);
 	}
 	
@@ -41,7 +43,7 @@ public class TransformationOrbitalElementsToLLA {
 		double a = orbit.getSemiMajorAxis();
 		double v = orbit.calculateTrueAnamoly(time); //assumer this is in radians
 		
-		double p = ((a*(1-Math.pow(eccentricity, 2))) / (1 + eccentricity * Math.cos(v))) * v;
+		double p = ((a*(1-Math.pow(eccentricity, 2))) / (1 + eccentricity * Math.cos(v))) * Math.cos(v);
 		return  p;
 	}
 	
@@ -50,7 +52,7 @@ public class TransformationOrbitalElementsToLLA {
 		double a = orbit.getSemiMajorAxis();
 		double v = orbit.calculateTrueAnamoly(time); //assumer this is in radians
 		
-		 double q = ((a*(1-Math.pow(eccentricity, 2))) / (1 + eccentricity * Math.sin(v))) * v;
+		 double q = ((a*(1-Math.pow(eccentricity, 2))) / (1 + eccentricity * Math.sin(v))) * Math.sin(v);
 		 return q;
 	}
 	
@@ -85,6 +87,22 @@ public class TransformationOrbitalElementsToLLA {
 	private static double calcLongitude(double X, double Y) {
 		double longitude = Math.atan(Y/X);
 		
+		if( Y > 0 && X < 0) {
+			longitude = longitude + Math.PI;
+			
+		}
+		
+		if(Y < 0 && X < 0) {
+			longitude = longitude - Math.PI;
+		}
+
+		if(Y > 0 && X == 0) {
+			longitude = Math.PI/2;
+		}
+		
+		if(Y<0 && X==0) {
+			longitude = -Math.PI/2;
+		}
 		return longitude * 180/Math.PI;
 	}
 

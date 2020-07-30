@@ -5,17 +5,20 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import objects.Orbit;
 import objects.Satellite;
+import objects.SatelliteAnimate;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class OrbitTransferPanel extends JFrame {
 
 	private static final long serialVersionUID = 4891662990030018097L;
 	private JPanel contentPane;
-	private JTextField textField_name;
 	private JTextField textField_inclination;
 	private JTextField textField_semiMajorAxis;
 	private JTextField textField_logindtudeOfAscendingNode;
@@ -35,16 +38,12 @@ public class OrbitTransferPanel extends JFrame {
 		contentPane.setLayout(null);
 		
 		JComboBox<Satellite> comboBox = new JComboBox<objects.Satellite>(GUI.satellites);
-		comboBox.setBounds(262, 23, 125, 22);
+		comboBox.setBounds(262, 46, 125, 22);
 		contentPane.add(comboBox);
 		
 		JLabel lblNewLabel = new JLabel("Satellite");
-		lblNewLabel.setBounds(58, 27, 66, 14);
+		lblNewLabel.setBounds(58, 54, 66, 14);
 		contentPane.add(lblNewLabel);
-		
-		JLabel lbl_name = new JLabel("Name");
-		lbl_name.setBounds(58, 54, 46, 14);
-		contentPane.add(lbl_name);
 		
 		JLabel lblNewLabel1 = new JLabel("Eccentricity");
 		lblNewLabel1.setBounds(58, 79, 98, 14);
@@ -65,11 +64,6 @@ public class OrbitTransferPanel extends JFrame {
 		JLabel lblNewLabel_4 = new JLabel("Argument of Periapsis");
 		lblNewLabel_4.setBounds(58, 179, 153, 14);
 		contentPane.add(lblNewLabel_4);
-		
-		textField_name = new JTextField();
-		textField_name.setBounds(262, 51, 125, 20);
-		contentPane.add(textField_name);
-		textField_name.setColumns(10);
 		
 		textField_inclination = new JTextField();
 		textField_inclination.setBounds(262, 101, 125, 20);
@@ -97,6 +91,11 @@ public class OrbitTransferPanel extends JFrame {
 		textField_eccentricity.setColumns(10);
 		
 		JButton addButton = new JButton("Add");
+		addButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				changeOrbit();
+			}
+		});
 		addButton.setBounds(122, 240, 89, 23);
 		contentPane.add(addButton);
 		
@@ -105,5 +104,23 @@ public class OrbitTransferPanel extends JFrame {
 		contentPane.add(cancelButton);
 		
 		setVisible(true);
+	}
+
+
+	protected void changeOrbit() {
+		Orbit orbit = new Orbit(
+				Double.parseDouble(this.textField_eccentricity.getText()),
+				Double.parseDouble(this.textField_semiMajorAxis.getText()),
+				Double.parseDouble(this.textField_inclination.getText()),
+				Double.parseDouble(this.textField_logindtudeOfAscendingNode.getText()),
+				Double.parseDouble(this.textField_argumentOfPeriapsis.getText())
+				);
+		
+		Satellite sat = (Satellite) GUI.satellites.getSelectedItem();
+		sat.setOrbit(orbit);
+		SatelliteAnimate.orbitChanged = true;
+		
+		dispose();
+		
 	}
 }

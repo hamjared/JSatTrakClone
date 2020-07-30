@@ -15,11 +15,12 @@ public class ButtonPanel extends JPanel {
 	private JButton groundStationButton;
 	private JButton orbitTransferButton;
 	private JButton refreshButton;
-	private JComboBox<objects.Satellite> comboBox;
+	private JComboBox<objects.Satellite> satelliteComboBox;
+	private JComboBox<objects.GroundStation> gsComboBox;
 
 	public ButtonPanel() {
 		super();
-		setBackground(Color.GREEN);
+		setBackground(Color.GRAY);
 		setPreferredSize(new Dimension(1920, 100));
 		satelliteButton = new JButton("Add Satellite");
 		groundStationButton = new JButton("Add Ground Station");
@@ -68,8 +69,10 @@ public class ButtonPanel extends JPanel {
 		super.add(satelliteButton);
 		super.add(groundStationButton);
 		super.add(orbitTransferButton);
-		comboBox = new JComboBox<objects.Satellite>(GUI.satellites);
-		super.add(comboBox);
+		satelliteComboBox = new JComboBox<objects.Satellite>(GUI.satellites);
+		super.add(satelliteComboBox);
+		gsComboBox = new JComboBox<objects.GroundStation>(GUI.groundStations);
+		super.add(gsComboBox);
 		super.add(refreshButton);
 	}
 
