@@ -1,6 +1,9 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 
@@ -12,11 +15,13 @@ import objects.Satellite;
 public class GUI {
 	public static DefaultComboBoxModel<Satellite> satellites = new DefaultComboBoxModel<Satellite>();
 	public static DefaultComboBoxModel<GroundStation> groundStations = new DefaultComboBoxModel<GroundStation>();
+	public static List<Orbit> transferOrbits = new ArrayList<Orbit>();
 	
 	public GUI() {
-		satellites.addElement(new Satellite("ISS", new Orbit(0, 6.79e6, 66.5, 225.16, 96.2)));
 		satellites.addElement(new Satellite("GEO", new Orbit(0, 42.164e6, 30, 180, 0)));
-		groundStations.addElement(new GroundStation("Cape Canveral", new Position(28.45, -80.56)));
+		satellites.addElement(new Satellite("ISS", new Orbit(0, 6.79e6, 66.5, 225.16, 96.2)));
+		
+		groundStations.addElement(new GroundStation("Cape Canveral", new Position(28.45, -90)));
 		JFrame jframe = new JFrame();
 		jframe.setSize(1920, 900);
 		jframe.add(new ButtonPanel(), BorderLayout.NORTH);

@@ -14,9 +14,11 @@ import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 import javax.swing.Timer;
 
+import objects.GroundStation;
 import objects.Orbit;
 import objects.Satellite;
 import objects.SatelliteAnimate;
+import javax.swing.JButton;
 
 public class OrbitalPanel extends JPanel {
 	
@@ -24,6 +26,7 @@ public class OrbitalPanel extends JPanel {
 	public static final double METERS_TO_PIXELS = 0.000005;
 	private static final double EARTH_RADIUS = 6.3781e6;
 	private SatelliteAnimate satAnimate;
+	private GroundStationAnimator gsAnimator;
 	
 
 	/**
@@ -34,7 +37,18 @@ public class OrbitalPanel extends JPanel {
 		setBackground(Color.LIGHT_GRAY);
 		setPreferredSize(new Dimension(960, 800));
 		setLayout(null);
+		
+		JButton btnNewButton = new JButton("Reset");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				satAnimate.reset();
+				gsAnimator.reset();
+			}
+		});
+		btnNewButton.setBounds(10, 11, 133, 23);
+		add(btnNewButton);
 		satAnimate = new SatelliteAnimate( (Satellite) GUI.satellites.getSelectedItem(),  960, 800);
+		gsAnimator = new GroundStationAnimator((GroundStation) GUI.groundStations.getSelectedItem(), 960, 800);
 		ActionListener actList = new ActionListener() {
 
 			@Override
@@ -57,6 +71,7 @@ public class OrbitalPanel extends JPanel {
 
 		Graphics2D g2 = (Graphics2D) g;
 		
+		
 		Satellite satellite = (Satellite) GUI.satellites.getSelectedItem();
 		Orbit orbit = null;
 		if(satellite != null) {
@@ -67,21 +82,41 @@ public class OrbitalPanel extends JPanel {
 			return;
 		}
 		
-	
+		GroundStation gs = (GroundStation) GUI.groundStations.getSelectedItem();
 		
-		this.drawScaledCenteredEllipse(this.getWidth()/2, this.getHeight()/2, 
+		
+	
+		int fociScaled = (int) (this.calcEllipseFoci(orbit.getSemiMajorAxis(), orbit.getEccentricity()) * METERS_TO_PIXELS);
+		this.drawScaledCenteredEllipse(this.getWidth()/2, this.getHeight()/2 - fociScaled, 
 				orbit.getSemiMajorAxis(), orbit.getEccentricity(), false, null, g2);
 		
-		int fociScaled = (int) (this.calcEllipseFoci(orbit.getSemiMajorAxis(), orbit.getEccentricity()) * METERS_TO_PIXELS);
+
 		
-		this.drawScaledCenteredEllipse(this.getWidth()/2,this.getHeight()/2 + fociScaled , 
+		this.drawScaledCenteredEllipse(this.getWidth()/2,this.getHeight()/2  , 
 				EARTH_RADIUS, 0 , true, Color.BLUE, g2);
 		
 		satAnimate.setSatellite(satellite);
 		satAnimate.setPanelHeight(this.getHeight());
 		satAnimate.setPanelWidth(this.getWidth());
+		
+		gsAnimator.setGs(gs);
+		gsAnimator.setPanelHeight(this.getHeight());
+		gsAnimator.setPanelWidth(this.getWidth());
+		
 		Ellipse2D satEllipse = satAnimate.drawSatellite();
 		g2.draw(satEllipse);
+		
+		Ellipse2D gsEllipse = gsAnimator.drawGroundStation();
+		Color prevColor = g2.getColor();
+		g2.setColor(Color.RED);
+		g2.fill(gsEllipse);
+		g2.setColor(prevColor);
+		
+		for(Orbit o: GUI.transferOrbits) {
+			this.drawScaledCenteredEllipse(this.getWidth()/2, 
+					this.getHeight()/2 - (int) (this.calcEllipseFoci(o.getSemiMajorAxis(), o.getEccentricity()) * METERS_TO_PIXELS), 
+					o.getSemiMajorAxis(), o.getEccentricity(), false, null, g2);
+		}
 		
 		
 		

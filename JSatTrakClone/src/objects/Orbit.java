@@ -141,4 +141,10 @@ public class Orbit {
 		// TODO Auto-generated method stub
 		return Math.toRadians(inclination);
 	}
+	
+	public String toString() {
+		return "e = " + this.eccentricity + "\n"
+				+ "a = " + this.semiMajorAxis + "\n"
+				+ "i = " + this.inclination + "\n";
+	}
 }

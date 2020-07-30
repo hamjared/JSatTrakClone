@@ -12,7 +12,7 @@ public class NewtonsSolver {
 	
 	
 	public static double solve(double e,double Me) {
-		int maxIterations = 1000;
+		int maxIterations = 10000;
 		double xGuess = 5;
 		
 		int iteration = 0;

@@ -78,6 +78,7 @@ public class ButtonPanel extends JPanel {
 
 	protected void refreshButtonPressed() {
 		super.revalidate();
+		this.getParent().revalidate();
 		this.getParent().repaint();
 	}
 

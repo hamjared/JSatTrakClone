@@ -6,6 +6,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import objects.Orbit;
+import objects.OrbitTransfer;
 import objects.Satellite;
 import objects.SatelliteAnimate;
 
@@ -117,8 +118,13 @@ public class OrbitTransferPanel extends JFrame {
 				);
 		
 		Satellite sat = (Satellite) GUI.satellites.getSelectedItem();
+		Orbit transferOrbit = OrbitTransfer.hohmannTransfer(sat.getOrbit(), orbit);
+		GUI.transferOrbits.add(sat.getOrbit());
+		GUI.transferOrbits.add(transferOrbit);
 		sat.setOrbit(orbit);
 		SatelliteAnimate.orbitChanged = true;
+		SatelliteAnimate.onTransferOrbit = true;
+		
 		
 		dispose();
 		
