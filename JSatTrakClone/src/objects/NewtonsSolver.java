@@ -10,7 +10,6 @@ public class NewtonsSolver {
 		return 1 - e*Math.cos(x);
 	}
 	
-	
 	public static double solve(double e,double Me) {
 		int maxIterations = 10000;
 		double xGuess = 5;
@@ -38,13 +37,8 @@ public class NewtonsSolver {
 		return x_cur;
 	}
 	
-	
 	public static void main(String[] args) {
 		double E = solve(0.5, 6.0);
-		System.out.println(E);
-		
+		System.out.println(E);	
 	}
-	
-	
-	
 }

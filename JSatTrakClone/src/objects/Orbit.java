@@ -3,7 +3,6 @@ package objects;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.time.ZoneOffset;
 
 public class Orbit {
 	private double eccentricity;
@@ -32,6 +31,8 @@ public class Orbit {
 	public double calculateTrueAnamoly( LocalDateTime time) {
 		
 		Duration TimeDifference = Duration.between(epochTime, time);
+		
+		//.toSeconds() is a jdk9 library change from Java 8 may need to reference library...
 		double difference = TimeDifference.toSeconds();
 		
 		double orbitalPeriod = Math.PI*2 * Math.sqrt(semiMajorAxis * semiMajorAxis * semiMajorAxis/AstroConstants.EARTH_GRAVITATIONAL_PARAMETER); // seconds
@@ -50,8 +51,7 @@ public class Orbit {
 		double trueAnamoly = 2 * Math.atan(Math.sqrt((1+this.eccentricity)/(1-this.eccentricity))*Math.tan(EccentricAnamoly/2));
 		
 		if (trueAnamoly < 0) {
-			return 2*Math.PI + trueAnamoly;
-			
+			return 2*Math.PI + trueAnamoly;	
 		}
 		else {
 			return trueAnamoly;
@@ -109,36 +109,23 @@ public class Orbit {
 	}
 	
 	public boolean equals(Orbit orbit2) {
-		if(eccentricity != orbit2.getEccentricity()) {
-			return false;
-		}
-		if (semiMajorAxis != orbit2.getSemiMajorAxis()) {
-			return false;
-		}
-		if(inclination != orbit2.getInclination()) {
-			return false;
-		}
-		if(longitudeOfAscendingNode != orbit2.getLongitudeOfAscendingNode()) {
-			return false;
-		}
-		if(argumentOfPeriapsis != orbit2.getArgumentOfPeriapsis()) {
-			return false;
-		}
-		return true;
+		
+		return (eccentricity == orbit2.getEccentricity()) &&
+			   (semiMajorAxis == orbit2.getSemiMajorAxis()) &&
+			   (inclination == orbit2.getInclination()) &&
+			   (longitudeOfAscendingNode == orbit2.getLongitudeOfAscendingNode()) &&
+			   (argumentOfPeriapsis == orbit2.getArgumentOfPeriapsis());
 	}
 
 	public double getLongitudeOfAscendingNodeRadians() {
-		
 		return Math.toRadians(longitudeOfAscendingNode);
 	}
 
-	public double getArgumentOfPeriapsisRadians() {
-		
+	public double getArgumentOfPeriapsisRadians() {	
 		return Math.toRadians(argumentOfPeriapsis);
 	}
 
 	public double getInclinationRadians() {
-		// TODO Auto-generated method stub
 		return Math.toRadians(inclination);
 	}
 	

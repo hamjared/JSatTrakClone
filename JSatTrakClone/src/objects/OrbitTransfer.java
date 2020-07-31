@@ -2,6 +2,7 @@ package objects;
 
 public class OrbitTransfer {
 
+	@SuppressWarnings("unused")
 	public static Orbit hohmannTransfer(Orbit orbit1, Orbit orbit2) {
 		double ra_1 = orbit1.getSemiMajorAxis() * (1 + orbit1.getEccentricity());
 		double rp_1 = orbit1.getSemiMajorAxis() * (1 - orbit1.getEccentricity());
@@ -15,6 +16,7 @@ public class OrbitTransfer {
 		return new Orbit(e, a, orbit2.getInclination(), orbit2.getLongitudeOfAscendingNode(), orbit2.getArgumentOfPeriapsis());
 	}
 	
+	@SuppressWarnings("unused")
 	public static double hohmannTransferDeltaV(Orbit orbit1, Orbit orbit2) {
 		double ra_1 = orbit1.getSemiMajorAxis() * (1 + orbit1.getEccentricity());
 		double rp_1 = orbit1.getSemiMajorAxis() * (1 - orbit1.getEccentricity());
@@ -26,6 +28,7 @@ public class OrbitTransfer {
  		return deltaV1 + deltaV2;
 	}
 	
+	@SuppressWarnings("unused")
 	public static double hohmannTransferTime(Orbit orbit1, Orbit orbit2) {
 		double ra_1 = orbit1.getSemiMajorAxis() * (1 + orbit1.getEccentricity());
 		double rp_1 = orbit1.getSemiMajorAxis() * (1 - orbit1.getEccentricity());
@@ -52,5 +55,4 @@ public class OrbitTransfer {
 		System.out.println(hohmannTransferAngularAlignment(orbit1, orbit2));
 		System.out.println(hohmannTransfer(orbit1, orbit2));
 	}
-	
 }

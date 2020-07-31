@@ -20,14 +20,14 @@ public class GUI {
 	public GUI() {
 		satellites.addElement(new Satellite("GEO", new Orbit(0, 42.164e6, 30, 180, 0)));
 		satellites.addElement(new Satellite("ISS", new Orbit(0, 6.79e6, 66.5, 225.16, 96.2)));
-		
-		groundStations.addElement(new GroundStation("Cape Canveral", new Position(28.45, -90)));
+		satellites.addElement(new Satellite("Molniya", new Orbit(0.74, 26.6e6, 63.4, 0, 270)));
+		groundStations.addElement(new GroundStation("Cape Canveral", new Position(28.45, -80)));
 		JFrame jframe = new JFrame();
+		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jframe.setSize(1920, 900);
 		jframe.add(new ButtonPanel(), BorderLayout.NORTH);
 		jframe.add(new MapPanel(), BorderLayout.WEST);
 		jframe.add(new OrbitalPanel(), BorderLayout.EAST);
 		jframe.setVisible(true);
-		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }

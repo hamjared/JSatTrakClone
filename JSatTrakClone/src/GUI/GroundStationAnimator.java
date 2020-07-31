@@ -1,6 +1,5 @@
 package GUI;
 
-import java.awt.Color;
 import java.awt.geom.Ellipse2D;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -8,7 +7,6 @@ import java.time.Month;
 
 import objects.AstroConstants;
 import objects.GroundStation;
-import objects.Satellite;
 import objects.SatelliteAnimate;
 
 public class GroundStationAnimator {
@@ -84,5 +82,4 @@ public class GroundStationAnimator {
 	public void reset() {
 		curTime = startTime;
 	}
-
 }
