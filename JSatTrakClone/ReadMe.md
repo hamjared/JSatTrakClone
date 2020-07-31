@@ -8,6 +8,8 @@ This a simple application capable of plotting satellite ground tracks and displa
 
 ## How to use
 
+Run Main.java
+
 3 satellites come built in as well as one ground station
 
 Change between satellites using the dropdown menu. 
