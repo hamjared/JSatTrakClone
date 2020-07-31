@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.time.LocalDateTime;
 
@@ -87,8 +88,11 @@ public class OrbitalPanel extends JPanel {
 		
 	
 		int fociScaled = (int) (this.calcEllipseFoci(orbit.getSemiMajorAxis(), orbit.getEccentricity()) * METERS_TO_PIXELS);
+
 		this.drawScaledCenteredEllipse(this.getWidth()/2, this.getHeight()/2 - fociScaled, 
 				orbit.getSemiMajorAxis(), orbit.getEccentricity(), false, null, g2);
+
+		
 		
 
 		
