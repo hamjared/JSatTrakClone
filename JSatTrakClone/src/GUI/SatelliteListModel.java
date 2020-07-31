@@ -23,5 +23,4 @@ public class SatelliteListModel extends AbstractListModel<Object>{
 	public List<Satellite> getList() {
 		return satellites;
 	}
-
 }

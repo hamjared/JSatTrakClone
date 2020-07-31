@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -25,46 +26,37 @@ public class MapPanel extends JPanel {
 	private static final int mapWidth = 800;
 	private static final int mapHeight = 800;
 	private static final long serialVersionUID = 4482363922601778730L;
+	private Image map = null;
 
 	public MapPanel() {
 		super();
 		setBackground(Color.BLUE);
 		setPreferredSize(new Dimension(960, 800));
+		this.setLayout(new FlowLayout());
+		map = getImage();
 	}
-
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		g.drawImage(getImage(), 0, 0, mapWidth, mapHeight, null);
-	}
-
+	
+	@Override
 	public void paint(Graphics g) {
-		
-		g.drawImage(getImage(), 0, 0, mapWidth, mapHeight, null);
-		plotGroundStations(g);
-		Satellite sat = (Satellite) GUI.satellites.getSelectedItem();
-		if(sat == null) {
-			System.out.println("Satellite  is null");
-			return;
+		try {
+			g.drawImage(map, 0, 0, mapWidth, mapHeight, this);
+			plotGroundStations(g);
+			Satellite sat = (Satellite) GUI.satellites.getSelectedItem();
+			if(sat != null) {
+				System.out.println("ISS Ground Track:");
+				List<Position> groundTrack = sat.groundTrack(LocalDateTime.now().minusMinutes(0), LocalDateTime.now().plusMinutes(24*60));
+				drawGroundTrack(groundTrack, (Graphics2D)g);
+			}
+		} finally {
+			g.dispose();
 		}
-		System.out.println("ISS Ground Track:");
-		List<Position> groundTrack = sat.groundTrack(LocalDateTime.now().minusMinutes(0), LocalDateTime.now().plusMinutes(24*60));
-//		groundTrack.forEach(pos -> System.out.println(pos));
-		drawGroundTrack(groundTrack, g);
 	}
 	
 	private void plotGroundStations(Graphics g) {
 		GroundStation gs = (GroundStation) GUI.groundStations.getSelectedItem();
-		
-		if(gs == null) {
-			return;
-		}
-		
 		Position gsPos = gs.getPosition();
-		
-		Graphics2D g2 = (Graphics2D) g;
-		
 		drawCenteredEllipse(gsPos.getMercatorLongitude(mapWidth, mapHeight),
-				gsPos.getMercatorLatitude(mapWidth, mapHeight), 10, 10, true, (Graphics2D) g);
+		gsPos.getMercatorLatitude(mapWidth, mapHeight), 10, 10, true, (Graphics2D) g);
 	}
 
 	private Image getImage() {
@@ -77,7 +69,7 @@ public class MapPanel extends JPanel {
 		return image;
 	}
 
-	public void drawGroundTrack(List<Position> positions, Graphics g) {
+	private void drawGroundTrack(List<Position> positions, Graphics2D g) {
 
 		for( int i = 1; i < positions.size(); i ++) {
 			g.drawLine(positions.get(i-1).getMercatorLongitude(mapWidth, mapHeight),
@@ -103,11 +95,10 @@ public class MapPanel extends JPanel {
 		else {
 			g.draw(ellipse);
 
-		}
-
-		
+		}		
 	}
 
+	@SuppressWarnings("unused")
 	private List<Position> readGroundTrack() {
 		String filename = "resource/ISS.csv";
 		List<Position> positions = new ArrayList<>();

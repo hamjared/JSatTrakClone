@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class TransformationOrbitalElementsToLLA {
 	
-	private static double DEGREES_TO_RADIANS = Math.PI/180;
+	private static final double DEGREES_TO_RADIANS = Math.PI/180;
 	
 	public static Position orbitalElementsToLLA(Orbit orbit, LocalDateTime time) {
 		double P = calcP(orbit, orbit.calculateTrueAnamoly(time));
@@ -29,8 +29,6 @@ public class TransformationOrbitalElementsToLLA {
 				Q
 				);
 		
-		
-		
 		double lat = calcLatitude(X, Y, Z);
 		double lon = calcLongitude(X,Y);
 //		System.out.println("X: " + X + " Y: " + Y + "Lat: " + lat + "Long: " + lon);
@@ -43,7 +41,7 @@ public class TransformationOrbitalElementsToLLA {
 		double a = orbit.getSemiMajorAxis();
 		double v = trueAnamoly; //assumer this is in radians
 		
-		double p = ((a*(1-Math.pow(eccentricity, 2))) / (1 + eccentricity * Math.cos(v))) * Math.cos(v);
+		double p = ((a*(1-(eccentricity * eccentricity))) / (1 + eccentricity * Math.cos(v))) * Math.cos(v);
 		return  p;
 	}
 	
@@ -52,8 +50,8 @@ public class TransformationOrbitalElementsToLLA {
 		double a = orbit.getSemiMajorAxis();
 		double v = trueAnamoly; //assumer this is in radians
 		
-		 double q = ((a*(1-Math.pow(eccentricity, 2))) / (1 + eccentricity * Math.cos(v))) * Math.sin(v);
-		 return q;
+		double q = ((a*(1-Math.pow(eccentricity, 2))) / (1 + eccentricity * Math.cos(v))) * Math.sin(v);
+		return q;
 	}
 	
 	private static double calcX(double Omega, double w, double i, double P, double Q) {
@@ -78,7 +76,6 @@ public class TransformationOrbitalElementsToLLA {
 	
 	private static double calcLatitude(double X, double Y, double Z) {
 		double inner = (Z / Math.sqrt(X*X + Y*Y + Z*Z));
-		double magnitude = Math.sqrt(X*X + Y*Y + Z*Z);
 		double lattitude = Math.PI/2 -   Math.acos(inner);
 		
 		return lattitude * 180/Math.PI;
@@ -87,9 +84,8 @@ public class TransformationOrbitalElementsToLLA {
 	private static double calcLongitude(double X, double Y) {
 		double longitude = Math.atan(Y/X);
 		
-		if( Y > 0 && X < 0) {
+		if(Y > 0 && X < 0) {
 			longitude = longitude + Math.PI;
-			
 		}
 		
 		if(Y < 0 && X < 0) {
@@ -100,12 +96,11 @@ public class TransformationOrbitalElementsToLLA {
 			longitude = Math.PI/2;
 		}
 		
-		if(Y<0 && X==0) {
+		if(Y < 0 && X == 0) {
 			longitude = -Math.PI/2;
 		}
 		return longitude * 180/Math.PI;
 	}
-	
 	
 	public static void main(String[] args) {
 		double i =  30;

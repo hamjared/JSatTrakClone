@@ -15,14 +15,10 @@ public class Satellite {
 		return orbitChanged;
 	}
 
-
-
 	public void setOrbitChanged(boolean orbitChanged) {
 		this.orbitChanged = true;
 		this.orbitChanged = orbitChanged;
 	}
-
-
 
 	public Satellite(String name, Orbit orbit) {
 		this.orbit = orbit;
@@ -30,17 +26,17 @@ public class Satellite {
 		this.orbitChanged = false;
 	}
 	
-
-
 	public List<Position> groundTrack(LocalDateTime start, LocalDateTime end){
 		List<Position> positions = new ArrayList<Position>();
 		int stepSize = 30; //seconds
 		LocalDateTime curTime = start;
+		
 		while(curTime.compareTo(end) < 0) {
 			curTime = curTime.plusSeconds(stepSize);
 			Position pos = TransformationOrbitalElementsToLLA.orbitalElementsToLLA(orbit, curTime);
 			positions.add(pos);
 		}
+		
 		return positions;
 	}
 	
@@ -73,6 +69,4 @@ public class Satellite {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-
 }

@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -17,6 +20,9 @@ public class ButtonPanel extends JPanel {
 	private JButton refreshButton;
 	private JComboBox<objects.Satellite> satelliteComboBox;
 	private JComboBox<objects.GroundStation> gsComboBox;
+	private OrbitTransferPanel orbitTransferPanel = null;
+	private GroundStationPane groundStationPane = null;
+	private SatellitePanel satellitePanel = null;
 
 	public ButtonPanel() {
 		super();
@@ -33,7 +39,6 @@ public class ButtonPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				satelliteButtonPressed();
 			}
-			
 		});
 
 		groundStationButton.addActionListener(new ActionListener() {
@@ -41,9 +46,7 @@ public class ButtonPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				groundStationButtonPressed();
-
 			}
-
 		});
 
 		orbitTransferButton.addActionListener(new ActionListener() {
@@ -51,9 +54,7 @@ public class ButtonPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				orbitTansferButtonPressed();
-
 			}
-
 		});
 		
 		refreshButton.addActionListener(new ActionListener() {
@@ -61,19 +62,17 @@ public class ButtonPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				refreshButtonPressed();
-				
 			}
-			
 		});
 		
-		super.add(satelliteButton);
-		super.add(groundStationButton);
-		super.add(orbitTransferButton);
+		add(satelliteButton);
+		add(groundStationButton);
+		add(orbitTransferButton);
 		satelliteComboBox = new JComboBox<objects.Satellite>(GUI.satellites);
-		super.add(satelliteComboBox);
+		add(satelliteComboBox);
 		gsComboBox = new JComboBox<objects.GroundStation>(GUI.groundStations);
-		super.add(gsComboBox);
-		super.add(refreshButton);
+		add(gsComboBox);
+		add(refreshButton);
 	}
 
 	protected void refreshButtonPressed() {
@@ -81,17 +80,38 @@ public class ButtonPanel extends JPanel {
 		this.getParent().revalidate();
 		this.getParent().repaint();
 	}
-
+	
 	protected void orbitTansferButtonPressed() {
-		new OrbitTransferPanel();
+		if(orbitTransferPanel == null) {
+			orbitTransferPanel = new OrbitTransferPanel();
+			orbitTransferPanel.addWindowListener(new WindowAdapter() {
+				public void windowClosed(WindowEvent e) {
+					orbitTransferPanel = null;
+				}
+			});
+		}
 	}
 
 	protected void groundStationButtonPressed() {
-		new GroundStationPane();
+		if(groundStationPane == null) {
+			groundStationPane = new GroundStationPane();
+			groundStationPane.addWindowListener(new WindowAdapter() {
+				public void windowClosed(WindowEvent e) {
+					groundStationPane = null;
+				}
+			});
+		}
 	}
 
-	public void satelliteButtonPressed() {
-		System.out.println("Satellite Button Pressed");
-		new SatellitePanel();
+	protected void satelliteButtonPressed() {
+		//System.out.println("Satellite Button Pressed");
+		if(satellitePanel == null) {
+			satellitePanel = new SatellitePanel();
+			satellitePanel.addWindowListener(new WindowAdapter() {
+				public void windowClosed(WindowEvent e) {
+					satellitePanel = null;
+				}
+			});
+		}
 	}
 }
